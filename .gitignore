@@ -1,5 +1,6 @@
 # Test files
 test-*.php
+test-*.html
 /tmp/
 
 # WordPress
