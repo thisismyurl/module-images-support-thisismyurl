@@ -1,0 +1,47 @@
+# WordPress
+wp-config.php
+wp-content/uploads/
+wp-content/blogs.dir/
+wp-content/upgrade/
+wp-content/backup-db/
+wp-content/advanced-cache.php
+wp-content/wp-cache-config.php
+wp-content/cache/
+*.log
+
+# Dependencies
+/node_modules/
+/vendor/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Build artifacts
+/dist/
+/build/
+
+# Temporary files
+*.tmp
+*.bak
+*.orig
+.cache/
+
+# Testing
+/tmp/
+/temp/
+phpunit.xml
+.phpunit.result.cache
+
+# Composer
+composer.phar
+composer.lock
+
+# NPM
+package-lock.json
+npm-debug.log
+yarn-error.log
