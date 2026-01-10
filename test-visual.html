@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Composition Guides - Visual Test</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            color: #333;
+            margin-top: 0;
+        }
+        
+        .controls {
+            margin: 20px 0;
+            padding: 15px;
+            background: #f9f9f9;
+            border-radius: 4px;
+        }
+        
+        .control-group {
+            margin-bottom: 10px;
+        }
+        
+        label {
+            display: inline-block;
+            min-width: 120px;
+            font-weight: 500;
+        }
+        
+        select, input[type="range"] {
+            padding: 5px 10px;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+        }
+        
+        input[type="range"] {
+            width: 200px;
+            vertical-align: middle;
+        }
+        
+        .canvas-container {
+            margin: 30px 0;
+            position: relative;
+            display: inline-block;
+        }
+        
+        canvas {
+            border: 2px solid #ddd;
+            display: block;
+            background: #f0f0f0;
+        }
+        
+        .info {
+            margin-top: 10px;
+            padding: 10px;
+            background: #e3f2fd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        
+        button {
+            padding: 10px 20px;
+            background: #0073aa;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            margin-right: 10px;
+        }
+        
+        button:hover {
+            background: #005177;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Composition Guides - Visual Test</h1>
+        
+        <div class="controls">
+            <h3>Settings</h3>
+            
+            <div class="control-group">
+                <label for="gridType">Grid Type:</label>
+                <select id="gridType">
+                    <option value="rule-of-thirds">Rule of Thirds</option>
+                    <option value="golden-ratio">Golden Ratio</option>
+                </select>
+            </div>
+            
+            <div class="control-group">
+                <label for="canvasWidth">Canvas Width:</label>
+                <input type="number" id="canvasWidth" value="800" min="100" max="2000">
+            </div>
+            
+            <div class="control-group">
+                <label for="canvasHeight">Canvas Height:</label>
+                <input type="number" id="canvasHeight" value="600" min="100" max="2000">
+            </div>
+            
+            <div class="control-group">
+                <label for="opacity">Opacity:</label>
+                <input type="range" id="opacity" min="0" max="100" value="80">
+                <span id="opacityValue">80%</span>
+            </div>
+            
+            <div class="control-group">
+                <button onclick="drawGrid()">Draw Grid</button>
+                <button onclick="clearCanvas()">Clear Canvas</button>
+            </div>
+        </div>
+        
+        <div class="canvas-container">
+            <canvas id="testCanvas" width="800" height="600"></canvas>
+        </div>
+        
+        <div class="info">
+            <strong>Rule of Thirds:</strong> Divides the image into 9 equal sections with 2 vertical and 2 horizontal lines.<br>
+            <strong>Golden Ratio:</strong> Displays a Fibonacci spiral based on the golden ratio (φ ≈ 1.618).
+        </div>
+    </div>
+    
+    <script>
+        const canvas = document.getElementById('testCanvas');
+        const ctx = canvas.getContext('2d');
+        
+        // Update opacity display
+        document.getElementById('opacity').addEventListener('input', function() {
+            document.getElementById('opacityValue').textContent = this.value + '%';
+            drawGrid();
+        });
+        
+        // Auto-draw on grid type change
+        document.getElementById('gridType').addEventListener('change', drawGrid);
+        
+        // Update canvas size
+        document.getElementById('canvasWidth').addEventListener('change', function() {
+            canvas.width = parseInt(this.value);
+            drawGrid();
+        });
+        
+        document.getElementById('canvasHeight').addEventListener('change', function() {
+            canvas.height = parseInt(this.value);
+            drawGrid();
+        });
+        
+        function clearCanvas() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            // Fill with light gray background
+            ctx.fillStyle = '#f0f0f0';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+        }
+        
+        function drawGrid() {
+            clearCanvas();
+            
+            const gridType = document.getElementById('gridType').value;
+            const opacity = document.getElementById('opacity').value / 100;
+            
+            if (gridType === 'rule-of-thirds') {
+                drawRuleOfThirds(opacity);
+            } else if (gridType === 'golden-ratio') {
+                drawGoldenRatio(opacity);
+            }
+        }
+        
+        function drawRuleOfThirds(opacity) {
+            const width = canvas.width;
+            const height = canvas.height;
+            
+            ctx.strokeStyle = `rgba(255, 255, 255, ${opacity})`;
+            ctx.lineWidth = 2;
+            ctx.shadowColor = 'rgba(0, 0, 0, 0.3)';
+            ctx.shadowBlur = 2;
+            
+            // Vertical lines
+            const x1 = width / 3;
+            const x2 = 2 * width / 3;
+            
+            ctx.beginPath();
+            ctx.moveTo(x1, 0);
+            ctx.lineTo(x1, height);
+            ctx.stroke();
+            
+            ctx.beginPath();
+            ctx.moveTo(x2, 0);
+            ctx.lineTo(x2, height);
+            ctx.stroke();
+            
+            // Horizontal lines
+            const y1 = height / 3;
+            const y2 = 2 * height / 3;
+            
+            ctx.beginPath();
+            ctx.moveTo(0, y1);
+            ctx.lineTo(width, y1);
+            ctx.stroke();
+            
+            ctx.beginPath();
+            ctx.moveTo(0, y2);
+            ctx.lineTo(width, y2);
+            ctx.stroke();
+            
+            // Draw intersection points
+            ctx.shadowBlur = 0;
+            ctx.fillStyle = `rgba(255, 255, 255, ${opacity})`;
+            const points = [
+                [x1, y1], [x2, y1],
+                [x1, y2], [x2, y2]
+            ];
+            
+            points.forEach(([x, y]) => {
+                ctx.beginPath();
+                ctx.arc(x, y, 4, 0, Math.PI * 2);
+                ctx.fill();
+            });
+        }
+        
+        function drawGoldenRatio(opacity) {
+            const width = canvas.width;
+            const height = canvas.height;
+            
+            ctx.strokeStyle = `rgba(255, 200, 0, ${opacity})`;
+            ctx.lineWidth = 2;
+            ctx.shadowColor = 'rgba(0, 0, 0, 0.3)';
+            ctx.shadowBlur = 2;
+            
+            const centerX = width / 2;
+            const centerY = height / 2;
+            
+            ctx.beginPath();
+            for (let i = 0; i < 100; i++) {
+                const angle = i * 0.1;
+                const radius = (width / 4) * Math.exp(angle / (2 * Math.PI));
+                const x = centerX + radius * Math.cos(angle);
+                const y = centerY + radius * Math.sin(angle);
+                
+                if (i === 0) {
+                    ctx.moveTo(x, y);
+                } else {
+                    ctx.lineTo(x, y);
+                }
+            }
+            ctx.stroke();
+        }
+        
+        // Initial draw
+        drawGrid();
+    </script>
+</body>
+</html>
