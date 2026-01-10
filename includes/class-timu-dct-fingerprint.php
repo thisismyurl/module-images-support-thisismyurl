@@ -156,20 +156,27 @@ class TIMU_DCT_Fingerprint {
             return null;
         }
         
-        // Check if it's a JPEG
+        // Check image type
         $image_info = @getimagesize( $file_path );
-        if ( $image_info === false || $image_info[2] !== IMAGETYPE_JPEG ) {
+        if ( $image_info === false ) {
             return null;
         }
         
         // Check GD library support
-        if ( ! function_exists( 'imagecreatefromjpeg' ) ) {
+        if ( ! function_exists( 'imagecreatefromjpeg' ) || ! function_exists( 'imagecreatefrompng' ) ) {
             return null;
         }
         
         try {
-            // Load image
-            $image = @imagecreatefromjpeg( $file_path );
+            // Load image based on type
+            if ( $image_info[2] === IMAGETYPE_JPEG ) {
+                $image = @imagecreatefromjpeg( $file_path );
+            } elseif ( $image_info[2] === IMAGETYPE_PNG ) {
+                $image = @imagecreatefrompng( $file_path );
+            } else {
+                return null;
+            }
+            
             if ( $image === false ) {
                 return null;
             }
