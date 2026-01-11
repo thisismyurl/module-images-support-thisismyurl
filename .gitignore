@@ -1,45 +1,57 @@
 # WordPress
 wp-config.php
-wp-content/uploads/
-wp-content/cache/
-wp-content/backup-db/
-wp-content/backups/
-wp-content/blogs.dir/
-wp-content/upgrade/
+.htaccess
 
-# Backups
-*.original
-*.lsb_original
-*.bak
-*.backup
+# Plugin temporary files
+*.tmp
+*_mozjpeg.jpg
+*_guetzli.jpg
+*_webp.webp
+*_avif.avif
+*_temp.jpg
 
-# IDE
-.idea/
+# IDE files
 .vscode/
-*.sublime-project
-*.sublime-workspace
+.idea/
+*.sublime-*
+
+# OS files
 .DS_Store
 Thumbs.db
+*.swp
+*.swo
+*~
 
-# Logs
+# Log files
 *.log
 error_log
 debug.log
 
-# Temporary files
-*.tmp
-*.temp
+# Backup files
+*.bak
+*.backup
 *~
 
-# Node
+# Node modules (if using npm for development)
 node_modules/
 package-lock.json
-npm-debug.log
+yarn.lock
 
 # Composer
 vendor/
 composer.lock
 
-# Build
+# Build artifacts
 dist/
 build/
+*.zip
+
+# Testing
+.phpunit.result.cache
+phpunit.xml
+tests/_output/
+tests/_support/_generated/
+
+# Cache
+cache/
+.cache/
