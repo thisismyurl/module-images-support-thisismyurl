@@ -1,0 +1,57 @@
+# WordPress
+wp-config.php
+.htaccess
+
+# Plugin temporary files
+*.tmp
+*_mozjpeg.jpg
+*_guetzli.jpg
+*_webp.webp
+*_avif.avif
+*_temp.jpg
+
+# IDE files
+.vscode/
+.idea/
+*.sublime-*
+
+# OS files
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+
+# Log files
+*.log
+error_log
+debug.log
+
+# Backup files
+*.bak
+*.backup
+*~
+
+# Node modules (if using npm for development)
+node_modules/
+package-lock.json
+yarn.lock
+
+# Composer
+vendor/
+composer.lock
+
+# Build artifacts
+dist/
+build/
+*.zip
+
+# Testing
+.phpunit.result.cache
+phpunit.xml
+tests/_output/
+tests/_support/_generated/
+
+# Cache
+cache/
+.cache/
